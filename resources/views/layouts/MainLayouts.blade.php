@@ -49,7 +49,8 @@
 			}
 		</style>
     <link rel="stylesheet" href="/css/buttons.css">
-    <link rel="icon" sizes="40x40" href="{{ asset('/images/logo-new.png') }}">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" href="/images/logo.png">
 <title>UniPost | {{ $title }}</title>
 </head>
 <body x-data="{scrolledFromTop: false, dropdownMenu: false}"

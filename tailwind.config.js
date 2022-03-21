@@ -19,8 +19,21 @@ module.exports = {
                 fadeInDownCustom1: "fadeInDownCustom1 1s forwards",
                 UpDown: "UpDown 1s ease-in infinite",
                 scale: "scale 1s forwards",
+                bgFadeInUp: "bgFadeInUp 1s forwards"
             },
             keyframes: {
+                bgFadeInUp: {
+                    "0%": {
+                        colors: '#FFCD01',
+                        opacity: 0,
+                        transform: '-translate-y-[0px]'
+                    },
+                    "100%": {
+                        colors: '#FFCD01',
+                        opacity: 1,
+                        transform: '-translate-y-[48px]',
+                    }
+                },
                 fadeIn: {
                     "0%": {
                         opacity: 0

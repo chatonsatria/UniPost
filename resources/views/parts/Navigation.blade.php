@@ -7,12 +7,31 @@
         </div>
         <div>
             <div class="hidden md:block">
-                <a href="/login" class="text-xl font-bold">LOGIN</a>
+                <div class="flex flex-row w-full items-center gap-x-6">
+                    <a href="/about" class="text-xl font-bold hover:text-gray-600">ABOUT</a>
+                    <a href="/posts" class="text-xl font-bold hover:text-gray-600">POST</a>
+                    <a href="/categories" class="text-xl font-bold hover:text-gray-600">CATEGORIES</a>
+                    @auth
+                    <form action="/logout" method="post">
+                        @csrf
+                        <button type="submit" class="btn_effect text-lg font-bold">LOGOUT</button>
+                    </form>
+                    @else
+                    <a href="/login" class="btn_effect text-lg font-bold">LOGIN</a>
+                    @endauth
+                </div>
             </div>
             {{-- dropmenu button --}}
             <div class="md:hidden z-10">
                 <div class="flex flex-row items-center gap-x-6">
-                    <a href="/login" class="text-lg font-bold">LOGIN</a>
+                    @auth
+                    <form action="/logout" method="post">
+                        @csrf
+                        <button type="submit" class="btn_effect text-lg font-bold">LOGOUT</button>
+                    </form>
+                    @else
+                    <a href="/login" class="btn_effect text-lg font-bold">LOGIN</a>
+                    @endauth
                     <button @click="dropdownMenu = ! dropdownMenu" class="p-2 border border-black rounded-lg z-10">
                         <div class="w-8 h-1 bg-black rounded-full mb-[4px] m-auto transition-all"
                             :class="{'' : !dropdownMenu, 'rotate-[45deg] translate-y-[8px]' : dropdownMenu}"></div>
@@ -35,7 +54,7 @@
             <h1 class="text-lg font-bold">CATEGORIES</h1><div class="w-20 h-1 bg-gray-400 mb-2"></div>
             <div class="flex flex-col gap-4">
                 @foreach ($categories as $item)
-                <a href="/posts?category={{ $item->slug }}" class="w-full h-auto px-4 py-2 rounded-md bg-gray-800 text-gray-300 hover:text-white hover:bg-gray-700 font-bold">{{ $item->name }}</a>
+                <a href="/posts?category={{ $item->slug }}" class="w-full h-auto px-4 py-2 rounded-md bg-gray-800 text-gray-300 hover:text-white hover:bg-gray-700 font-bold transition-all">{{ $item->name }}</a>
                 @endforeach
             </div>
         </div>

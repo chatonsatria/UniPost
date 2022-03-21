@@ -1,29 +1,58 @@
-  .form-signin .form-floating:focus-within {
+.form-signin .form-floating:focus-within {
     z-index: 2;
-  }
-  
-  .form-signin input[type="email"] {
+}
+
+.form-signin input[type="email"] {
     margin-bottom: -1px;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
-  }
-  
-  .form-signin input[type="password"] {
+}
+
+.form-signin input[type="password"] {
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-  }
+}
 
-  .form-registration input{
+.form-registration input {
     border-radius: 0;
     margin-bottom: -1px;
-  }
-  .size-18{
+}
+.size-18 {
     width: 16px;
     height: 16px;
     stroke: green;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      fill: none;
-  }
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+}
+
+.text_effect {
+    padding-right: 5px;
+    color: white;
+    background-position-y: -0%;
+    background-image: linear-gradient(transparent 50%, gold 50%);
+    transition: background 500ms ease;
+    background-size: 2px;
+    background-size: auto 180%;
+}
+.btn_effect {
+    padding-right: 2px;
+    padding-left: 2px;
+    color: black;
+    background-position-y: 145%;
+    background-image: linear-gradient(transparent 50%, gold 50%);
+    transition: background 500ms ease;
+    background-size: 2px;
+    background-size: auto 300%;
+}
+
+.text_effect:hover {
+    color: black;
+    background-position-y: 100%;
+}
+.btn_effect:hover {
+    color: black;
+    background-position-y: 100%;
+}

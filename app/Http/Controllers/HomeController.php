@@ -14,7 +14,7 @@ class HomeController extends Controller
         return view('pages.Landing',[
             'title' => "Home",
             'active' => "home",
-            'post' => Post::latest()->with('category', 'user')->take(10)->get(),
+            'post' => Post::latest()->with('category', 'user')->take(8)->get(),
             'categories' => Category::all(),
         ]);
 
