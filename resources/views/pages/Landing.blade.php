@@ -1,16 +1,20 @@
 @extends('layouts.MainLayouts')
 
 @section('content')
-<h1>dwa</h1>
-<div class="w-full md:max-w-7xl mt-9 mx-auto">
-    <h1 class="font-bold text-3xl md:text-5xl text-white text-center"><span class="text_effect text-white">LATEST</span>
+<div class="flex flex-col w-full md:max-w-7xl mt-9 mx-auto gap-y-4 md:gap-y-11">
+    <h1 class="font-bold text-3xl md:text-5xl text-white text-center"><span
+            class="text_effect hover:cursor-pointer text-white">LATEST</span>
         POST</h1>
+    <p class="font-semibold text-lg md:text-3xl text-center text-white">GO <a href="/search"
+            class="btn_effect_white">FIND</a> YOUR DESIRE POST TO READ</p>
 </div>
-<div class="flex flex-col md:grid md:grid-cols-2 w-full md:max-w-7xl p-2 md:p-4 lg:p-8 xl:p-10 pt-11 gap-6 text-white">
+<div
+    class="flex flex-col lg:grid lg:grid-cols-2 w-full md:max-w-7xl p-2 md:p-4 lg:p-6 xl:p-6 pt-11 gap-6 mx-auto text-white">
     {{-- mobile --}}
-    <div class="md:hidden">
+    <div class="lg:hidden">
         @if ($post->count())
-        <div class="flex flex-col w-full h-auto p-9 bg-slate-600">
+        <div class="flex flex-col w-full h-auto p-4 rounded">
+            {{-- first card --}}
             @if ($post[0]->image)
             <div class="relative h-64 w-full flex items-end justify-start text-left bg-cover bg-center"
                 style="background-image:url('storage/{{ $post[0]->image }}');">
@@ -21,452 +25,398 @@
                     <div
                         class="absolute top-0 mt-20 right-0 bottom-0 left-0 bg-gradient-to-b from-transparent to-gray-900">
                     </div>
-                    <div class="absolute top-0 right-0 left-0 mx-5 mt-2 flex justify-between items-center">
+                    <div class="absolute top-0 flex items-center">
                         <a href="/posts?category={{ $post[0]->category->slug }}"
-                            class="text-xs bg-indigo-600 text-white px-5 py-2 uppercase hover:bg-white hover:text-indigo-600 transition ease-in-out duration-500">{{ $post[0]->category->name }}</a>
-                        <div class="text-white font-regular flex flex-col justify-start">
-                            <span class="text-3xl leading-0 font-semibold">20</span>
-                            <span class="-mt-3">Jan</span>
-                        </div>
+                            class="text-md bg-white text-black px-5 py-2 uppercase hover:bg-gray-200 transition ease-in-out bg-opacity-40 rounded-br-md">{{ $post[0]->category->name }}</a>
                     </div>
-                    <main class="p-5 z-10">
+                    <main class="flex flex-col p-3 z-10">
                         <a href="/post"
-                            class="text-md tracking-tight font-medium leading-7 font-regular text-white hover:underline">{{ $post[0]->title }}</a>
+                            class="text-2xl tracking-tight font-semibold leading-7 font-regular text-white hover:underline">{{ $post[0]->title }}</a>
+                        <p class="text-md font-medium">By. <a href="/posts?user={{ $post[0]->user->username }}"
+                                class="text-base font-medium hover:underline">{{ $post[0]->user->name }}</a></p>
+                        <p class="text-base font-light">{{ $post[0]->created_at->diffForHumans() }}</p>
+                        <a href="/post/{{ $post[0]->slug }}">READ</a>
                     </main>
                 </div>
-                {{-- @if ($posts[0]->image)
-                    <img src="{{ asset('storage/' . $posts[0]->image) }}" class="w-full h-full rounded-t-md"
-                alt="https://source.unsplash.com/1200x400?{{ $posts[0]->category->name }}">
-                @else
-                <img src="https://source.unsplash.com/1200x400?{{ $posts[0]->category->name }}"
-                    class="w-full h-full rounded-t-md"
-                    alt="https://source.unsplash.com/1200x400?{{ $posts[0]->category->name }}">
-                @endif --}}
             </div>
-            {{ $post[1]->title }}<br>
-            {{ $post[2]->title }}<br>
+            {{-- second card --}}
+            <div class="flex flex-col md:grid md:grid-cols-2 p-4 w-full gap-4 text-black">
+                <div class="flex flex-col w-full h-auto gap-y-4 bg-white">
+                    <div class="relative flex w-full max-h-32">
+                        @if ($post[1]->image)
+                        <img src="{{ asset('storage/' . $post[1]->image) }}" class="w-full hover:scale-125"
+                            alt="https://source.unsplash.com/1200x400?{{ $post[1]->category->name }}">
+                        @else
+                        <img src="https://source.unsplash.com/1200x400?{{ $post[1]->category->name }}"
+                            alt="https://source.unsplash.com/1200x400?{{ $post[1]->category->name }}">
+                        @endif
+                        <h1
+                            class="absolute flex flex-row bg-white bg-opacity-40 transition-all rounded-br-md px-4 py-2">
+                            <a href="/post?category={{ $post[1]->category->slug }}"></a> {{ $post[1]->category->name }}
+                        </h1>
+                    </div>
+                    <div class="flex flex-col p-4 gap-y-4">
+                        <h1 class="font-base text-lg">{{ $post[1]->created_at->diffForHumans() }}</h1>
+                        <h1 class="font-bold text-xl">{{ $post[1]->title }}</h1>
+                        <a href="/post/{{ $post[1]->slug }}" class="font-semibold">READ</a>
+                    </div>
+                </div>
+                {{-- third card --}}
+                <div class="flex flex-col w-full h-auto gap-y-4 bg-white">
+                    <div class="relative flex w-full max-h-32">
+                        @if ($post[2]->image)
+                        <img src="{{ asset('storage/' . $post[2]->image) }}" class="w-full peer-hover:scale-150"
+                            alt="https://source.unsplash.com/1200x400?{{ $post[2]->category->name }}">
+                        @else
+                        <img src="https://source.unsplash.com/1200x400?{{ $post[2]->category->name }}"
+                            alt="https://source.unsplash.com/1200x400?{{ $post[2]->category->name }}">
+                        @endif
+                        <h1
+                            class="absolute flex flex-row bg-white bg-opacity-40 transition-all rounded-br-md px-4 py-2">
+                            <a href="/post?category={{ $post[2]->category->slug }}"></a> {{ $post[2]->category->name }}
+                        </h1>
+                    </div>
+                    <div class="flex flex-col p-4 gap-y-4">
+                        <h1 class="font-base text-lg">{{ $post[2]->created_at->diffForHumans() }}</h1>
+                        <h1 class="font-bold text-xl">{{ $post[2]->title }}</h1>
+                        <a href="/post/{{ $post[2]->slug }}" class="font-semibold">READ</a>
+                    </div>
+                </div>
+            </div>
             @endif
         </div>
-        <div class="md:hidden">
-            <div class="flex flex-col w-full">
+        <div class="lg:hidden">
+            <h1 class="font-semibold text-xl p-4">TODAY'S <span class="text_effect hover:cursor-pointer">POST</span>
+            </h1>
+            <div class="flex flex-col md:grid md:grid-cols-2 w-full h-auto p-4 gap-4">
                 @foreach ($post->skip(3) as $item)
-                <div>
-                    {{ $item->title }}
+                <div class="grid grid-cols-3 w-full h-auto gap-x-4">
+                    <div class="w-full">
+                        @if ($item->image)
+                        <img src="{{ asset('storage/' . $item->image) }}" class="w-full h-full"
+                            alt="https://source.unsplash.com/1200x400?{{ $item->category->name }}">
+                        @else
+                        <img src="https://source.unsplash.com/1200x400?{{ $item->category->name }}"
+                            alt="https://source.unsplash.com/1200x400?{{ $item->category->name }}">
+                        @endif
+                    </div>
+                    <div class="col-span-2">
+                        <a href="/post?category={{ $item->category->slug }}">
+                            <h2 class="hover:underline text-sm md:text-base">{{ $item->category->name }}</h2>
+                        </a>
+                        <a href="/post/{{ $item->slug }}">
+                            <h1 class="hover:underline text-sm md:text-base font-semibold">{{ $item->title }}</h1>
+                        </a>
+                    </div>
                 </div>
                 @endforeach
             </div>
+            <a href="/posts" class="p-4"><span class="text_effect text-white">SEE MORE</span></a>
         </div>
 
         {{-- web --}}
-        <div class="hidden md:block">
-            <div class="flex flex-col w-full">
+        <div class="hidden lg:block">
+            <h1 class="font-semibold text-xl p-4">TODAY'S <span class="text_effect hover:cursor-pointer">POST</span>
+            </h1>
+            <div class="flex flex-col w-full h-auto p-4 gap-4">
                 @foreach ($post->skip(3) as $item)
-                <div>
-                    {{ $item->title }}
+                <div class="grid grid-cols-3 w-full h-auto gap-x-4">
+                    <div class="w-full">
+                        @if ($item->image)
+                        <img src="{{ asset('storage/' . $item->image) }}" class="w-full h-full"
+                            alt="https://source.unsplash.com/1200x400?{{ $item->category->name }}">
+                        @else
+                        <img src="https://source.unsplash.com/1200x400?{{ $item->category->name }}"
+                            alt="https://source.unsplash.com/1200x400?{{ $item->category->name }}">
+                        @endif
+                    </div>
+                    <div class="col-span-2">
+                        <a href="/post?category={{ $item->category->slug }}">
+                            <h2 class="hover:underline text-sm md:text-base">{{ $item->category->name }}</h2>
+                        </a>
+                        <a href="/post/{{ $item->slug }}">
+                            <h1 class="hover:underline text-sm md:text-base font-semibold">{{ $item->title }}</h1>
+                        </a>
+                    </div>
                 </div>
                 @endforeach
             </div>
+            <a href="/posts" class="p-4"><span class="text_effect text-white">SEE MORE</span></a>
         </div>
-        <div class="hidden md:block">
+        <div class="hidden lg:block">
             @if ($post->count())
-            {{ $post[0]->title }}<br>
-            {{ $post[1]->title }}<br>
-            {{ $post[2]->title }}<br>
-            @endif
+            <div class="flex flex-col w-full h-auto p-4 rounded">
+                {{-- first card --}}
+                @if ($post[0]->image)
+                <div class="relative min-h-[400px] w-full flex items-end justify-start text-left bg-cover bg-center"
+                    style="background-image:url('storage/{{ $post[0]->image }}');">
+                    @else
+                    <div class="relative h-64 w-full flex items-end justify-start text-left bg-cover bg-center"
+                        style="background-image:url('https://source.unsplash.com/1200x400?{{ $post[0]->category->name }}');">
+                        @endif
+                        <div
+                            class="absolute top-0 mt-20 right-0 bottom-0 left-0 bg-gradient-to-b from-transparent to-gray-900">
+                        </div>
+                        <div class="absolute top-0 flex items-center">
+                            <a href="/posts?category={{ $post[0]->category->slug }}"
+                                class="text-md bg-white text-black px-5 py-2 uppercase hover:bg-gray-200 transition ease-in-out bg-opacity-40 rounded-br-md">{{ $post[0]->category->name }}</a>
+                        </div>
+                        <main class="flex flex-col p-3 z-10">
+                            <a href="/post"
+                                class="text-2xl tracking-tight font-semibold leading-7 font-regular text-white hover:underline">{{ $post[0]->title }}</a>
+                            <p class="text-md font-medium">By. <a href="/posts?user={{ $post[0]->user->username }}"
+                                    class="text-base font-medium hover:underline">{{ $post[0]->user->name }}</a></p>
+                            <p class="text-base font-light">{{ $post[0]->created_at->diffForHumans() }}</p>
+                            <a href="/post/{{ $post[0]->slug }}">READ</a>
+                        </main>
+                    </div>
+                </div>
+                {{-- second card --}}
+                <div class="flex flex-col md:grid md:grid-cols-2 p-4 w-full gap-4 text-black">
+                    <div class="flex flex-col w-full h-auto gap-y-4 bg-white">
+                        <div class="relative flex w-full max-h-32">
+                            @if ($post[1]->image)
+                            <img src="{{ asset('storage/' . $post[1]->image) }}" class="w-full hover:scale-125"
+                                alt="https://source.unsplash.com/1200x400?{{ $post[1]->category->name }}">
+                            @else
+                            <img src="https://source.unsplash.com/1200x400?{{ $post[1]->category->name }}"
+                                alt="https://source.unsplash.com/1200x400?{{ $post[1]->category->name }}">
+                            @endif
+                            <h1
+                                class="absolute flex flex-row bg-white bg-opacity-40 transition-all rounded-br-md px-4 py-2">
+                                <a href="/post?category={{ $post[1]->category->slug }}"></a>
+                                {{ $post[1]->category->name }}
+                            </h1>
+                        </div>
+                        <div class="flex flex-col p-4 gap-y-4">
+                            <h1 class="font-base text-lg">{{ $post[1]->created_at->diffForHumans() }}</h1>
+                            <h1 class="font-bold text-xl">{{ $post[1]->title }}</h1>
+                            <a href="/post/{{ $post[1]->slug }}" class="font-semibold">READ</a>
+                        </div>
+                    </div>
+                    {{-- third card --}}
+                    <div class="flex flex-col w-full h-auto gap-y-4 bg-white">
+                        <div class="relative flex w-full max-h-32">
+                            @if ($post[2]->image)
+                            <img src="{{ asset('storage/' . $post[2]->image) }}" class="w-full peer-hover:scale-150"
+                                alt="https://source.unsplash.com/1200x400?{{ $post[2]->category->name }}">
+                            @else
+                            <img src="https://source.unsplash.com/1200x400?{{ $post[2]->category->name }}"
+                                alt="https://source.unsplash.com/1200x400?{{ $post[2]->category->name }}">
+                            @endif
+                            <h1
+                                class="absolute flex flex-row bg-white bg-opacity-40 transition-all rounded-br-md px-4 py-2">
+                                <a href="/post?category={{ $post[2]->category->slug }}"></a>
+                                {{ $post[2]->category->name }}
+                            </h1>
+                        </div>
+                        <div class="flex flex-col p-4 gap-y-4">
+                            <h1 class="font-base text-lg">{{ $post[2]->created_at->diffForHumans() }}</h1>
+                            <h1 class="font-bold text-xl">{{ $post[2]->title }}</h1>
+                            <a href="/post/{{ $post[2]->slug }}" class="font-semibold">READ</a>
+                        </div>
+                    </div>
+                </div>
+                @endif
+            </div>
         </div>
     </div>
-    <section id="header" class="max-h-screen hidden md:block">
-        {{-- filler --}}
-        <section class="mt-[64px] flex flex-col w-full">
-            <div class="w-[100px] h-[2px] bg-white mt-2" x-intersect="$el.classList.add('animate-fadeInDown')"></div>
-            <div class="w-[125px] h-[2px] bg-red-900 mt-2" x-intersect="$el.classList.add('animate-fadeInRight')"></div>
-            <div class="w-[75px] h-[2px] bg-white mt-2" x-intersect="$el.classList.add('animate-fadeInUp')"></div>
-        </section>
-        <section class="flex flex-col w-full place-items-end">
-            <div class="w-[100px] h-[2px] bg-white mt-2" x-intersect="$el.classList.add('animate-fadeInDown')"></div>
-            <div class="w-[125px] h-[2px] bg-red-900 mt-2" x-intersect="$el.classList.add('animate-fadeInLeft')"></div>
-            <div class="w-[150px] h-[2px] bg-white mt-2" x-intersect="$el.classList.add('animate-fadeInUp')"></div>
-        </section>
-        {{-- when screen is large --}}
-        <section>
-            <div class="flex carousel relative w-full h-auto place-content-center place-items-center">
-                <div class="carousel-inner relative overflow-hidden w-3/4">
-                    <!--Slide 1-->
-                    <input class="carousel-open" type="radio" id="carousel-1" name="carousel" aria-hidden="true"
-                        hidden="" checked="checked">
-                    <div class="carousel-item absolute opacity-0 h-full">
-                        <div class="block h-full w-full">
-                            <div class="flex flex-col w-full h-full m-auto text-white">
-                                <div class="flex-col z-10">
-                                    <h1 class="text-8xl ml-6 opacity-0">####</h1>
-                                    <h1 class="text-9xl ml-6" x-intersect="$el.classList.add('animate-fadeInDown')">
-                                        UniPost</h1>
-                                </div>
-                                <div>
-                                    <div class="w-full h-full rounded-sm opacity-0 z-0"
-                                        x-intersect="$el.classList.add('animate-fadeInUpCustom1','-translate-y-[50px]')">
-                                        <img src="https://source.unsplash.com/1200x400?sports"
-                                            class="w-full h-full rounded-md"
-                                            alt="https://source.unsplash.com/1200x400?nature">
-                                    </div>
-                                </div>
-                                <div class="flex flex-row mx-11 my-3 justify-between"
-                                    x-intersect="$el.classList.add('animate-fadeInUpCustom1', '-translate-y-[50px]')">
-                                    <h1>
-                                        Category
-                                        <br>
-                                        <span class="text-lg font-semibold">Lorem Ipsum</span>
-                                    </h1>
-                                    <h1>
-                                        Reading Time
-                                        <br>
-                                        <span class="text-lg font-semibold">20 Minutes</span>
-                                    </h1>
-                                    <h1>
-                                        Posted Time
-                                        <br>
-                                        <span class="text-lg font-semibold">20 Minutes Ago</span>
-                                    </h1>
-                                    <h1 class="max-w-[400px]">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                        Praesentium officia repellat magnam quos ab cupiditate dignissimos hic eligendi
-                                        numquam! Quidem.</h1>
-                                    <h1>1000<span class="opacity-75"> people like this</span></h1>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <label for="carousel-3"
-                        class="prev control-1 w-10 h-10 ml-2 md:ml-10 absolute cursor-pointer hidden text-3xl font-bold text-black hover:text-white rounded-full bg-white hover:bg-slate-300 leading-tight text-center z-10 inset-y-0 left-0 my-auto">‹</label>
-                    <label for="carousel-2"
-                        class="next control-1 w-10 h-10 mr-2 md:mr-10 absolute cursor-pointer hidden text-3xl font-bold text-black hover:text-white rounded-full bg-white hover:bg-slate-300 leading-tight text-center z-10 inset-y-0 right-0 my-auto">›</label>
+</div>
 
-                    <!--Slide 2-->
-                    <input class="carousel-open" type="radio" id="carousel-2" name="carousel" aria-hidden="true"
-                        hidden="">
-                    <div class="carousel-item absolute opacity-0 h-full">
-                        <div class="block h-full w-full">
-                            <div class="flex flex-col w-full h-full m-auto text-white">
-                                <div class="flex-col z-10">
-                                    <h1 class="text-8xl ml-6 opacity-0">####</h1>
-                                    <h1 class="text-9xl ml-6" x-intersect="$el.classList.add('animate-fadeInDown')">
-                                        UniPost</h1>
-                                </div>
-                                <div>
-                                    <div class="w-full h-full rounded-sm opacity-0 z-0"
-                                        x-intersect="$el.classList.add('animate-fadeInUpCustom1','-translate-y-[50px]')">
-                                        <img src="https://source.unsplash.com/1200x400?car"
-                                            class="w-full h-full rounded-md"
-                                            alt="https://source.unsplash.com/1200x400?nature">
-                                    </div>
-                                </div>
-                                <div class="flex flex-row mx-11 my-3 justify-between"
-                                    x-intersect="$el.classList.add('animate-fadeInUpCustom1', '-translate-y-[50px]')">
-                                    <h1>
-                                        Category
-                                        <br>
-                                        <span class="text-lg font-semibold">Lorem Ipsum</span>
-                                    </h1>
-                                    <h1>
-                                        Reading Time
-                                        <br>
-                                        <span class="text-lg font-semibold">20 Minutes</span>
-                                    </h1>
-                                    <h1>
-                                        Posted Time
-                                        <br>
-                                        <span class="text-lg font-semibold">20 Minutes Ago</span>
-                                    </h1>
-                                    <h1 class="max-w-[400px]">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                        Praesentium officia repellat magnam quos ab cupiditate dignissimos hic eligendi
-                                        numquam! Quidem.</h1>
-                                    <h1>1000<span class="opacity-75"> people like this</span></h1>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <label for="carousel-1"
-                        class="prev control-2 w-10 h-10 ml-2 md:ml-10 absolute cursor-pointer hidden text-3xl font-bold text-black hover:text-white rounded-full bg-white hover:bg-slate-300 leading-tight text-center z-10 inset-y-0 left-0 my-auto">‹</label>
-                    <label for="carousel-3"
-                        class="next control-2 w-10 h-10 mr-2 md:mr-10 absolute cursor-pointer hidden text-3xl font-bold text-black hover:text-white rounded-full bg-white hover:bg-slate-300 leading-tight text-center z-10 inset-y-0 right-0 my-auto">›</label>
-
-                    <!--Slide 3-->
-                    <input class="carousel-open" type="radio" id="carousel-3" name="carousel" aria-hidden="true"
-                        hidden="">
-                    <div class="carousel-item absolute opacity-0 h-full">
-                        <div class="block h-full w-full">
-                            <div class="flex flex-col w-full h-full m-auto text-white">
-                                <div class="flex-col z-10">
-                                    <h1 class="text-8xl ml-6 opacity-0">####</h1>
-                                    <h1 class="text-9xl ml-6" x-intersect="$el.classList.add('animate-fadeInDown')">
-                                        UniPost</h1>
-                                </div>
-                                <div>
-                                    <div class="w-full h-full rounded-sm opacity-0 z-0"
-                                        x-intersect="$el.classList.add('animate-fadeInUpCustom1','-translate-y-[50px]')">
-                                        <img src="https://source.unsplash.com/1200x400?nature"
-                                            class="w-full h-full rounded-md"
-                                            alt="https://source.unsplash.com/1200x400?nature">
-                                    </div>
-                                </div>
-                                <div class="flex flex-row mx-11 my-3 justify-between"
-                                    x-intersect="$el.classList.add('animate-fadeInUpCustom1', '-translate-y-[50px]')">
-                                    <h1>
-                                        Category
-                                        <br>
-                                        <span class="text-lg font-semibold">Lorem Ipsum</span>
-                                    </h1>
-                                    <h1>
-                                        Reading Time
-                                        <br>
-                                        <span class="text-lg font-semibold">20 Minutes</span>
-                                    </h1>
-                                    <h1>
-                                        Posted Time
-                                        <br>
-                                        <span class="text-lg font-semibold">20 Minutes Ago</span>
-                                    </h1>
-                                    <h1 class="max-w-[400px]">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                        Praesentium officia repellat magnam quos ab cupiditate dignissimos hic eligendi
-                                        numquam! Quidem.</h1>
-                                    <h1>1000<span class="opacity-75"> people like this</span></h1>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <label for="carousel-2"
-                        class="prev control-3 w-10 h-10 ml-2 md:ml-10 absolute cursor-pointer hidden text-3xl font-bold text-black hover:text-white rounded-full bg-white hover:bg-slate-300 leading-tight text-center z-10 inset-y-0 left-0 my-auto">‹</label>
-                    <label for="carousel-1"
-                        class="next control-3 w-10 h-10 mr-2 md:mr-10 absolute cursor-pointer hidden text-3xl font-bold text-black hover:text-white rounded-full bg-white hover:bg-slate-300 leading-tight text-center z-10 inset-y-0 right-0 my-auto">›</label>
-
-                    <!-- Add additional indicators for each slide-->
-                    <ol class="carousel-indicators">
-                        <li class="inline-block mr-3">
-                            <label for="carousel-1"
-                                class="carousel-bullet cursor-pointer block text-4xl text-white hover:text-blue-700">•</label>
-                        </li>
-                        <li class="inline-block mr-3">
-                            <label for="carousel-2"
-                                class="carousel-bullet cursor-pointer block text-4xl text-white hover:text-blue-700">•</label>
-                        </li>
-                        <li class="inline-block mr-3">
-                            <label for="carousel-3"
-                                class="carousel-bullet cursor-pointer block text-4xl text-white hover:text-blue-700">•</label>
-                        </li>
-                    </ol>
-
-                </div>
-            </div>
-            {{-- <div class="flex flex-col w-[1600px] m-auto text-white">
-            <div class="flex-col z-10">
-                <h1 class="text-8xl ml-6" x-intersect="$el.classList.add('animate-fadeInDown')">We Are</h1>
-                <h1 class="text-9xl ml-6" x-intersect="$el.classList.add('animate-fadeInDown')">UniPost</h1>
-            </div>
-            <div>
-                <div class="w-full h-[600px] rounded-sm opacity-0 z-0" x-intersect="$el.classList.add('animate-fadeInUpCustom1','-translate-y-[50px]')">
-                    <img src="https://source.unsplash.com/1200x400?sports" class="w-full h-full rounded-md" alt="https://source.unsplash.com/1200x400?nature">
-                  </div>
-            </div>
-            <div class="flex flex-row mx-11 my-3 justify-between" x-intersect="$el.classList.add('animate-fadeInUpCustom1', '-translate-y-[50px]')">
-                <h1>
-                    Category
-                    <br>
-                    <span class="text-lg font-semibold">Lorem Ipsum</span>
-                </h1>
-                <h1>
-                    Reading Time
-                    <br>
-                    <span class="text-lg font-semibold">20 Minutes</span>
-                </h1>
-                <h1>
-                    Posted Time
-                    <br>
-                    <span class="text-lg font-semibold">20 Minutes Ago</span>
-                </h1>
-                <h1 class="max-w-[400px]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium officia repellat magnam quos ab cupiditate dignissimos hic eligendi numquam! Quidem.</h1>
-                <h1>1000<span class="opacity-75"> people like this</span></h1>
-            </div>
-        </div> --}}
-        </section>
-    </section>
-    {{-- filler --}}
-    <section class="flex flex-col w-full place-items-end">
-        <div class="w-[175px] h-[2px] bg-white my-2" x-intersect="$el.classList.add('animate-fadeInDown')"></div>
-        <div class="w-[125px] h-[2px] bg-red-900 my-2" x-intersect="$el.classList.add('animate-fadeInLeft')"></div>
-        <div class="w-[150px] h-[2px] bg-white my-2" x-intersect="$el.classList.add('animate-fadeInUp')"></div>
-    </section>
-    <section class="flex flex-col w-full">
-        <div class="w-[180px] h-[2px] bg-white my-2" x-intersect="$el.classList.add('animate-fadeInDown')"></div>
-        <div class="w-[100px] h-[2px] bg-red-900 my-2" x-intersect="$el.classList.add('animate-fadeInRight')"></div>
-        <div class="w-[125px] h-[2px] bg-white my-2" x-intersect="$el.classList.add('animate-fadeInUp')"></div>
-    </section>
-
-    {{-- RECOMENDED POST --}}
-    <section class="flex flex-col w-full h-auto place-items-end my-11"
-        x-intersect="$el.classList.add('animate-fadeInLeft')">
-        <div class="flex flex-col w-[88%] h-auto py-[80px] pl-11 bg-white rounded-md">
-            <h1 class="place-self-start text-5xl pb-6" x-intersect="$el.classList.add('animate-fadeInDown')">Recomended
-                From UniPost</h1>
-            <div cla ss="flex flex-row p-auto">
-                <div class="box-scroll flex overflow-x-scroll hide-scroll-bar">
-                    <div class="flex flex-nowrap">
-                        @foreach ($post as $item)
-                        <div class="inline-block pr-3 flex-row fade-in mb-6">
-                            <div class="w-[400px] h-[450px] overflow-hidden border-[0.5px] rounded-md shadow-md hover:shadow-xl transition-shadow duration-300 ease-in-out flex-col opacity-0"
-                                x-intersect="$el.classList.add('animate-fadeInUp')">
-                                <div class="w-auto bg-slate-200 p-2 text-base">
-                                    <a href="/post/{{ $item->slug }}">{{ $item->category->name }}</a>
-                                </div>
-                                <div>
-                                    @if ($item->image)
-                                    <div style="max-height: 110px; overflow:hidden;">
-                                        <img src="{{ asset('storage/' . $item->image) }}" class="card-img-top"
-                                            alt="https://source.unsplash.com/1200x400?{{ $item->category->name }}">
-                                    </div>
-                                    @else
-                                    <div style="max-height: 350px; overflow:hidden;">
-                                        <img src="https://source.unsplash.com/1200x400?{{ $item->category->name }}"
-                                            class="card-img-top"
-                                            alt="https://source.unsplash.com/1200x400?{{ $item->category->name }}">
-                                    </div>
-                                    @endif
-                                </div>
-                                <div class="px-[12px] w-full h-[200px] overflow-hidden py-2">
-                                    <div class="w-full h-[60px] text-lg font-semibold">
-                                        <h5><a href='/post/{{ $item->slug }}'>{{ $item->title }}</a></h5>
-                                    </div>
-                                    <div class="flex flex-row w-full place-content-between justify-between mb-2">
-                                        <p class="text-lg">By. <a href="/posts?user={{ $item->user->username }}"
-                                                class="font-semibold">{{ $item->user->name }}</a></p>
-                                        <p class="text-base">{{ $item->created_at->diffForHumans() }}</span></p>
-                                    </div>
-                                    <div>
-                                        <article class="text-md">{!! $item->excerpt !!}</article>
-                                    </div>
-                                </div>
-                                <div class="flex flex-col px-[12px] py-4">
-                                    <a href="/post/{{ $item->slug }}"
-                                        class="h-auto text-white bg-blue-600 rounded-md py-[2px] px-[24px] hover:bg-blue-500 active:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-400 focus:bg-blue-500 transition duration-200 text-center text-lg">Read</a>
-                                </div>
-                            </div>
-                        </div>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    {{-- DESCRIPTION AND REGISTER FORM --}}
-    <section class="flex flex-row w-full h-screen place-items-center place-content-center">
-        @auth
-        <div class="flex flex-row w-3/4 place-content-center place-items-center justify-between gap-x-[200px]">
-            <div class="flex flex-col w-auto text-white">
-                <h1 class="text-5xl font-semibold text-center sm:text-left mb-3 opacity-0"
-                    x-intersect="$el.classList.add('animate-fadeInRight')">What You Can Explore In UniPost.</h1>
-                <p class="text-2xl text-center md:text-left mb-2 opacity-0"
-                    x-intersect="$el.classList.add('animate-fadeInRight')">consectetur adipiscing elit ut aliquam, purus
-                    sit amet luctus venenatis, lectus magna fringilla urna, porttitor rhoncus dolor purus non enim
-                    praesent elementum facilisis leo, vel fringilla est ullamcorper eget nulla facilisi etiam dignissim
-                    diam quis enim lobortis scelerisque fermentum dui faucibus in ornare quam viverra orci sagittis eu
-                    volutpat odio facilisis mauris sit.</p>
-            </div>
-        </div>
-        @else
-        <div class="flex flex-row w-3/4 place-content-center place-items-center justify-between gap-x-[200px]">
-            <div class="flex flex-col w-auto text-white">
-                <h1 class="text-5xl font-semibold text-center sm:text-left mb-3 opacity-0"
-                    x-intersect="$el.classList.add('animate-fadeInRight')">What You Can Explore In UniPost.</h1>
-                <p class="text-2xl text-center md:text-left mb-2 opacity-0"
-                    x-intersect="$el.classList.add('animate-fadeInRight')">consectetur adipiscing elit ut aliquam, purus
-                    sit amet luctus venenatis, lectus magna fringilla urna, porttitor rhoncus dolor purus non enim
-                    praesent elementum facilisis leo, vel fringilla est ullamcorper eget nulla facilisi etiam dignissim
-                    diam quis enim lobortis scelerisque fermentum dui faucibus in ornare quam viverra orci sagittis eu
-                    volutpat odio facilisis mauris sit.</p>
-            </div>
-            <div class="w-full h-auto opacity-0" x-intersect="$el.classList.add('animate-fadeInLeft')">
-                <form action="/register" method="POST"
-                    class="w-full bg-white shadow-md rounded border px-8 pt-6 pb-8 mb-4 mx-auto">
-                    @csrf
-                    <h1 class="block text-gray-700 text-xl font-bold text-center mb-6">Register Here</h1>
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
-                            Name
-                        </label>
-                        <input
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('name') is-invalid @enderror"
-                            id="name" type="name" placeholder="name" name="name" value="{{ old('name') }}" required>
-                        @error('name')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                        @enderror
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
-                            Username
-                        </label>
-                        <input
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('username') is-invalid @enderror"
-                            id="username" type="username" placeholder="Username" name="username"
-                            value="{{ old('username') }}">
-                        @error('username')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                        @enderror
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
-                            Email
-                        </label>
-                        <input
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('email') is-invalid @enderror"
-                            id="email" type="email" placeholder="Email" name="email" value="{{ old('email') }}">
-                        @error('email')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                        @enderror
-                    </div>
-                    <div class="mb-6">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
-                            Password
-                        </label>
-                        <input
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline @error('password') is-invalid @enderror"
-                            id="password" name="password" type="password" placeholder="Password">
-                        @error('password')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                        @enderror
-                    </div>
-                    <div class="flex items-center w-full mb-3">
-                        <button
-                            class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                            type="submit">
-                            Register
-                        </button>
-                    </div>
+{{-- carousel --}}
+<div class="flex carousel relative w-full h-auto place-content-center place-items-center py-11">
+    <div class="carousel-inner relative overflow-hidden w-full">
+        <!--Slide 1-->
+        <input class="carousel-open" type="radio" id="carousel-1" name="carousel" aria-hidden="true" hidden=""
+            checked="checked">
+        <div class="carousel-item absolute opacity-0 h-full">
+            <div class="block h-full w-full">
+                <div class="flex flex-col w-full h-full m-auto text-white">
                     <div>
-                        <p class="text-right text-base">Already Registered ? <a href="/login"
-                                class="text-blue-500 hover:text-blue-800 text-base">Login</a></p>
+                        <div class="w-full h-full rounded-sm opacity-0 z-0"
+                            x-intersect="$el.classList.add('animate-fadeInUpCustom1','-translate-y-[50px]')">
+                            <img src="https://source.unsplash.com/1200x400?sports" class="w-full h-full rounded-md"
+                                alt="https://source.unsplash.com/1200x400?nature">
+                        </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
-        @endauth
+        <label for="carousel-3"
+            class="prev control-1 w-10 h-10 ml-2 md:ml-10 absolute cursor-pointer hidden text-3xl font-bold text-black hover:text-white rounded-full bg-white hover:bg-slate-300 leading-tight text-center z-10 inset-y-0 left-0 my-auto">‹</label>
+        <label for="carousel-2"
+            class="next control-1 w-10 h-10 mr-2 md:mr-10 absolute cursor-pointer hidden text-3xl font-bold text-black hover:text-white rounded-full bg-white hover:bg-slate-300 leading-tight text-center z-10 inset-y-0 right-0 my-auto">›</label>
 
-    </section>
-    <style>
-        .hide-scroll-bar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
+        <!--Slide 2-->
+        <input class="carousel-open" type="radio" id="carousel-2" name="carousel" aria-hidden="true" hidden="">
+        <div class="carousel-item absolute opacity-0 h-full">
+            <div class="block h-full w-full">
+                <div class="flex flex-col w-full h-full m-auto text-white">
+                    <div>
+                        <div class="w-full h-full rounded-sm opacity-0 z-0"
+                            x-intersect="$el.classList.add('animate-fadeInUpCustom1','-translate-y-[50px]')">
+                            <img src="https://source.unsplash.com/1200x400?car" class="w-full h-full rounded-md"
+                                alt="https://source.unsplash.com/1200x400?nature">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <label for="carousel-1"
+            class="prev control-2 w-10 h-10 ml-2 md:ml-10 absolute cursor-pointer hidden text-3xl font-bold text-black hover:text-white rounded-full bg-white hover:bg-slate-300 leading-tight text-center z-10 inset-y-0 left-0 my-auto">‹</label>
+        <label for="carousel-3"
+            class="next control-2 w-10 h-10 mr-2 md:mr-10 absolute cursor-pointer hidden text-3xl font-bold text-black hover:text-white rounded-full bg-white hover:bg-slate-300 leading-tight text-center z-10 inset-y-0 right-0 my-auto">›</label>
 
-        .hide-scroll-bar::-webkit-scrollbar {
-            display: none;
-        }
+        <!--Slide 3-->
+        <input class="carousel-open" type="radio" id="carousel-3" name="carousel" aria-hidden="true" hidden="">
+        <div class="carousel-item absolute opacity-0 h-full">
+            <div class="block h-full w-full">
+                <div class="flex flex-col w-full h-full m-auto text-white">
+                    <div>
+                        <div class="w-full h-full rounded-sm opacity-0 z-0"
+                            x-intersect="$el.classList.add('animate-fadeInUpCustom1','-translate-y-[50px]')">
+                            <img src="https://source.unsplash.com/1200x400?nature" class="w-full h-full rounded-md"
+                                alt="https://source.unsplash.com/1200x400?nature">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <label for="carousel-2"
+            class="prev control-3 w-10 h-10 ml-2 md:ml-10 absolute cursor-pointer hidden text-3xl font-bold text-black hover:text-white rounded-full bg-white hover:bg-slate-300 leading-tight text-center z-10 inset-y-0 left-0 my-auto">‹</label>
+        <label for="carousel-1"
+            class="next control-3 w-10 h-10 mr-2 md:mr-10 absolute cursor-pointer hidden text-3xl font-bold text-black hover:text-white rounded-full bg-white hover:bg-slate-300 leading-tight text-center z-10 inset-y-0 right-0 my-auto">›</label>
 
-    </style>
-    @endsection
+        <!-- Add additional indicators for each slide-->
+        <ol class="carousel-indicators">
+            <li class="inline-block mr-3">
+                <label for="carousel-1"
+                    class="carousel-bullet cursor-pointer block text-4xl text-white hover:text-blue-700">•</label>
+            </li>
+            <li class="inline-block mr-3">
+                <label for="carousel-2"
+                    class="carousel-bullet cursor-pointer block text-4xl text-white hover:text-blue-700">•</label>
+            </li>
+            <li class="inline-block mr-3">
+                <label for="carousel-3"
+                    class="carousel-bullet cursor-pointer block text-4xl text-white hover:text-blue-700">•</label>
+            </li>
+        </ol>
+
+    </div>
+</div>
+
+{{-- DESCRIPTION AND REGISTER FORM --}}
+    <div class="flex flex-col text-center w-full md:max-w-7xl mx-auto md:text-left md:flex-row md:justify-between">
+    @auth
+    <div class="flex flex-row w-3/4 place-content-center mx-auto place-items-center justify-between gap-x-[200px]">
+        <div class="flex flex-col w-auto text-white">
+            <h1 class="text-5xl font-semibold text-center sm:text-left mb-3 opacity-0"
+                x-intersect="$el.classList.add('animate-fadeInRight')">What You Can Explore In UniPost.</h1>
+            <p class="text-2xl text-center md:text-left mb-2 opacity-0"
+                x-intersect="$el.classList.add('animate-fadeInRight')">consectetur adipiscing elit ut aliquam, purus
+                sit amet luctus venenatis, lectus magna fringilla urna, porttitor rhoncus dolor purus non enim
+                praesent elementum facilisis leo, vel fringilla est ullamcorper eget nulla facilisi etiam dignissim
+                diam quis enim lobortis scelerisque fermentum dui faucibus in ornare quam viverra orci sagittis eu
+                volutpat odio facilisis mauris sit.</p>
+        </div>
+    </div>
+    @else
+    <div class="flex flex-col md:flex-row w-full md:max-w-7xl mx-auto place-content-center place-items-center justify-between gap-x-[200px]">
+        <div class="flex flex-col w-auto text-white">
+            <h1 class="text-2xl md:text-5xl font-semibold text-center sm:text-left mb-3 opacity-0"
+                x-intersect="$el.classList.add('animate-fadeInRight')">What You Can Explore In UniPost.</h1>
+            <p class="text-lg md:text-2xl text-center md:text-left mb-2 opacity-0"
+                x-intersect="$el.classList.add('animate-fadeInRight')">consectetur adipiscing elit ut aliquam, purus
+                sit amet luctus venenatis, lectus magna fringilla urna, porttitor rhoncus dolor purus non enim
+                praesent elementum facilisis leo, vel fringilla est ullamcorper eget nulla facilisi etiam dignissim
+                diam quis enim lobortis scelerisque fermentum dui faucibus in ornare quam viverra orci sagittis eu
+                volutpat odio facilisis mauris sit.</p>
+        </div>
+        <div class="w-full h-auto opacity-0 p-6" x-intersect="$el.classList.add('animate-fadeInLeft')">
+            <form action="/register" method="POST"
+                class="w-full bg-white shadow-md rounded border px-8 pt-6 pb-8 mb-4 mx-auto">
+                @csrf
+                <h1 class="block text-gray-700 text-xl font-bold text-center mb-6">Register Here</h1>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2 text-left" for="name">
+                        Name
+                    </label>
+                    <input
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('name') is-invalid @enderror"
+                        id="name" type="name" placeholder="name" name="name" value="{{ old('name') }}" required>
+                    @error('name')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2 text-left" for="username">
+                        Username
+                    </label>
+                    <input
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('username') is-invalid @enderror"
+                        id="username" type="username" placeholder="Username" name="username"
+                        value="{{ old('username') }}">
+                    @error('username')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2 text-left" for="email">
+                        Email
+                    </label>
+                    <input
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('email') is-invalid @enderror"
+                        id="email" type="email" placeholder="Email" name="email" value="{{ old('email') }}">
+                    @error('email')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-bold mb-2 text-left" for="password">
+                        Password
+                    </label>
+                    <input
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline @error('password') is-invalid @enderror"
+                        id="password" name="password" type="password" placeholder="Password">
+                    @error('password')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+                <div class="flex items-center w-full mb-3">
+                    <button
+                        class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        type="submit">
+                        Register
+                    </button>
+                </div>
+                <div>
+                    <p class="text-right text-base">Already Registered ? <a href="/login"
+                            class="text-blue-500 hover:text-blue-800 text-base">Login</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+    @endauth
+
+</div>
+<style>
+    .hide-scroll-bar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .hide-scroll-bar::-webkit-scrollbar {
+        display: none;
+    }
+
+</style>
+@endsection

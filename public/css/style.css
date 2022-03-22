@@ -47,12 +47,26 @@
     background-size: 2px;
     background-size: auto 300%;
 }
+.btn_effect_white {
+    padding-right: 2px;
+    padding-left: 2px;
+    color: white;
+    background-position-y: 145%;
+    background-image: linear-gradient(transparent 50%, gold 50%);
+    transition: background 500ms ease;
+    background-size: 2px;
+    background-size: auto 300%;
+}
 
 .text_effect:hover {
     color: black;
     background-position-y: 100%;
 }
 .btn_effect:hover {
+    color: black;
+    background-position-y: 100%;
+}
+.btn_effect_white:hover {
     color: black;
     background-position-y: 100%;
 }

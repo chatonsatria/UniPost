@@ -59,9 +59,9 @@
       class="bg-black font-Montserrat">
       
       {{-- link portfolio --}}
-      <div class="fixed flex flex-col w-[100px] min-h-screen place-content-center place-items-left z-10">
+      {{-- <div class="fixed flex flex-col w-[100px] min-h-screen place-content-center place-items-left z-10">
         <a href="#"><span class="bg-purple-600 fixed p-2 w-auto h-auto rounded-full text-white border border-purple-600 hover:text-white hover:bg-purple-500 transition duration-200">< Portfolio</span></a> 
-      </div>
+      </div> --}}
 
       <section>
         {{-- header --}}
