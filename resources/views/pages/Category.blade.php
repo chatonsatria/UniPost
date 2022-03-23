@@ -4,7 +4,7 @@
     <section>
         <div class="flex w-full h-auto py-20 bg-white my-11">
             <div class="grid grid-cols-3 w-3/4 h-auto mx-auto gap-6">
-                @foreach ($category as $item)
+                @foreach ($categories as $item)
                 <a href="/posts?category={{ $item->slug }}">
                 <div class="flex flex-col w-full h-full bg-blue rounded-md" x-intersect="$el.classList.add('animate-fadeInUp')">
                     

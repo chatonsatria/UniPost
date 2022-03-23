@@ -16,6 +16,7 @@
                         @csrf
                         <button type="submit" class="btn_effect text-lg font-bold">LOGOUT</button>
                     </form>
+                    <a href="/dashboard" class="btn_effect text-lg font-bold">DASHBOARD</a>
                     @else
                     <a href="/login" class="btn_effect text-lg font-bold">LOGIN</a>
                     @endauth
@@ -29,6 +30,7 @@
                         @csrf
                         <button type="submit" class="btn_effect text-lg font-bold">LOGOUT</button>
                     </form>
+                    <a href="/dashboard" class="btn_effect text-lg font-bold">DASHBOARD</a>
                     @else
                     <a href="/login" class="btn_effect text-lg font-bold">LOGIN</a>
                     @endauth

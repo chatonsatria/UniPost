@@ -1,7 +1,7 @@
 @extends('authentication.Layouts')
 @section('content')
 <div class="flex flex-col w-full min-h-screen">
-    <div class="flex flex-col w-full md:max-w-7xl m-auto p-6 md:p-20 bg-slate-600">
+    <div class="flex flex-col w-full md:max-w-7xl m-auto p-6 md:p-20">
         <form class="flex flex-col w-full h-auto rounded-md p-11 shadow-md gap-y-4 bg-white" action="/register"
             method="POST">
             @csrf

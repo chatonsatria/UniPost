@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="flex flex-col w-full min-h-screen">
-    <div class="flex flex-col w-full md:max-w-7xl m-auto p-6 md:p-20 bg-slate-600">
+    <div class="flex flex-col w-full md:max-w-7xl m-auto p-6 md:p-20">
         {{-- login status --}}
         @if (session()->has('status'))
         <div class="bg-blue-200 border-l-4 border-blue-600 p-4 translate-y-8" role="alert">

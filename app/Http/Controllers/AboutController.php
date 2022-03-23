@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class AboutController extends Controller
@@ -13,7 +14,8 @@ class AboutController extends Controller
             'active' => 'about',
             'name' => "Chaton Satria Yudhystira",
             'email' => "martin1998.mcsy@gmail.com",
-            'image' => "about.png"
+            'image' => "about.png",
+            'categories' => Category::all(),
         ]);
     }
 }

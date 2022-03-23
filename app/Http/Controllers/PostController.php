@@ -70,7 +70,7 @@ class PostController extends Controller
         return view('pages.category', [
             'title' => "All Categories",
             'active' => 'category',
-            'category' => Category::all()
+            'categories' => Category::all()
         ]);
     }
 }
